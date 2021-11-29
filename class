@@ -1,0 +1,17 @@
+public static String convertTimeZoneUserLocale(Integer offset,String currentDateInGMT)
+    {
+        String slotstartDate = currentDateInGMT.replace('T', ' ');
+        slotstartDate +=':00';
+        Datetime dt = DateTime.valueOfGMT(slotstartDate);
+        String returnTime = dt.format('yyyy-MM-dd HH:mm',  UserInfo.getTimeZone().toString() );
+        returnTime = returnTime.replace(' ', 'T');
+        return returnTime;
+    }
+    
+    Test
+    if(sl.SlotType__c == 'Restricted')
+            {
+                User loggedinUser = UtilityClass.getLoggedInUser();
+                sl.start_time__c = AccniteUtility.convertTimeZoneUserLocale(Integer.valueOf(loggedInUser.TimeZoneOffset__C),sl.start_time__c);
+                sl.end_time__c = AccniteUtility.convertTimeZoneUserLocale(Integer.valueOf(loggedInUser.TimeZoneOffset__C),sl.end_time__c);
+            }
